@@ -1,6 +1,6 @@
 package testUtils;
 
-import org.testng.annotations.BeforeTest;
+import java.io.File;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
@@ -11,16 +11,22 @@ public class ExtentReporterNG {
 
 	public static ExtentReports getReporterObject() {
 
-		// Extent Spark Reporter
-		String path = System.getProperty("user.dir") + "/reports/index.html";
-		ExtentSparkReporter reporter = new ExtentSparkReporter(path);
-		reporter.config().setReportName("Web Automation Results");
-		reporter.config().setDocumentTitle("Test Report");
+		if (extent == null) {
 
-		// MAIN EXTENT OBJECT
-		extent = new ExtentReports();
-		extent.attachReporter(reporter);
-		extent.setSystemInfo("Tester", "Swapnil Gadekar");
+			// Extent Spark Reporter
+			String reportDir = System.getProperty("user.dir") + "/reports";
+			new File(reportDir).mkdirs(); // 🔴 REQUIRED
+
+			String path = reportDir + "/index.html";
+			ExtentSparkReporter reporter = new ExtentSparkReporter(path);
+			reporter.config().setReportName("Panasonic Test Results");
+			reporter.config().setDocumentTitle("Test Report");
+
+			// MAIN EXTENT OBJECT
+			extent = new ExtentReports();
+			extent.attachReporter(reporter);
+			extent.setSystemInfo("Tester", "Swapnil Gadekar");
+		}
 		return extent;
 	}
 

@@ -1,3 +1,4 @@
+
 package utils;
 
 import java.io.File;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
@@ -26,15 +28,21 @@ import io.appium.java_client.service.local.AppiumServiceBuilder;
 
 public class AppiumUtils {
 
-	private AndroidDriver driver;
-	public AppiumDriverLocalService service;
+	protected AndroidDriver driver; // Changed to protected so BaseTest can access
+	protected AppiumDriverLocalService service;
+	private WebDriverWait wait;
+
+	// ✅ Default constructor for TestNG compatibility
+	public AppiumUtils() {
+		// No-arg constructor
+	}
 
 	public AppiumUtils(AndroidDriver driver) {
 		this.driver = driver;
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 	}
 
 	// ---------------------- Appium Server ----------------------
-
 	public AppiumDriverLocalService startAppiumServer(String ipAddress, int port) {
 		service = new AppiumServiceBuilder()
 				.withAppiumJS(new File("C:/Users/User/AppData/Roaming/npm/node_modules/appium/build/lib/main.js"))
@@ -45,26 +53,24 @@ public class AppiumUtils {
 	}
 
 	// ---------------------- JSON Data Utility ----------------------
-
 	public List<HashMap<String, String>> getJsonData(String jsonFilePath) throws IOException {
-		String jsonContent = FileUtils.readFileToString(new File(
-				System.getProperty("user.dir") + "/src/test/java/org/rahulashettyacademy/testData/eCommerce.json"));
+		String jsonContent = FileUtils.readFileToString(new File(jsonFilePath));
 		ObjectMapper mapper = new ObjectMapper();
-		List<HashMap<String, String>> data = mapper.readValue(jsonContent,
-				new TypeReference<List<HashMap<String, String>>>() {
-				});
-		return data;
+		return mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {
+		});
 	}
 
 	// ---------------------- Wait Utilities ----------------------
+	public void waitForElementToAppear(WebElement ele, String expectedText) {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+	    wait.until(ExpectedConditions.textToBePresentInElement(ele, expectedText));
+	}
 
-	public void waitForElementToAppear(WebElement ele) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-		wait.until(ExpectedConditions.attributeContains(ele, "text", "Cart"));
+	public void waitForClick(WebElement element) {
+		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
 	// ---------------------- Screenshot Utility ----------------------
-
 	public String getScreenshot(String testCaseName, AppiumDriver driver) throws IOException {
 		File source = driver.getScreenshotAs(OutputType.FILE);
 		String destinationFile = System.getProperty("user.dir") + "/reports/" + testCaseName + ".png";
@@ -73,13 +79,11 @@ public class AppiumUtils {
 	}
 
 	// ---------------------- Amount Utility ----------------------
-
 	public Double getFormattedAmount(String amount) {
 		return Double.parseDouble(amount.substring(1));
 	}
 
 	// ---------------------- Android Gesture Utilities ----------------------
-
 	public void longPressAction(WebElement ele) {
 		((JavascriptExecutor) driver).executeScript("mobile: longClickGesture",
 				ImmutableMap.of("elementId", ((RemoteWebElement) ele).getId(), "duration", 2000));

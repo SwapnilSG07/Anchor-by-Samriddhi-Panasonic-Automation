@@ -1,73 +1,86 @@
+
 package testUtils;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
 
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
-import io.appium.java_client.service.local.AppiumDriverLocalService;
 import utils.AppiumUtils;
 
 public class BaseTest extends AppiumUtils {
 
-    public BaseTest(AndroidDriver driver) {
-		super(driver);
-		// TODO Auto-generated constructor stub
+	protected Properties prop;
+
+	// ✅ Default constructor for TestNG
+	public BaseTest() {
+		super(); // Calls AppiumUtils default constructor
 	}
 
-	public AndroidDriver driver; // Global driver for all methods
-    public AppiumDriverLocalService service;
+	@BeforeTest(alwaysRun = true)
+	public void configureAppium() throws IOException {
+		// Load configuration from properties file
+		prop = new Properties();
+		FileInputStream fis = new FileInputStream(
+				System.getProperty("user.dir") + "/src/main/java/resources/data.properties");
+		prop.load(fis);
 
-    @BeforeClass(alwaysRun = true)
-    public void configureAppium() throws IOException {
+		String ipAddress = prop.getProperty("ipAddress");
+		String port = prop.getProperty("port");
 
-        // Load configuration from properties file
-        Properties prop = new Properties();
-        FileInputStream fis = new FileInputStream(
-                System.getProperty("user.dir") + "/src/main/java/org/rahulshettyacademy/resources/data.properties");
-        prop.load(fis);
+		// Start Appium server using AppiumUtils method
+		service = startAppiumServer(ipAddress, Integer.parseInt(port));
 
-        String ipAddress = prop.getProperty("ipAddress");
-        String port = prop.getProperty("port");
+		// Set Android options
+		UiAutomator2Options options = new UiAutomator2Options();
+		options.setDeviceName(prop.getProperty("AndroidDeviceNames"));
 
-        // Start Appium server
-        service = startAppiumServer(ipAddress, Integer.parseInt(port));
+		// Use relative path for Chromedriver
+		options.setChromedriverExecutable(
+				System.getProperty("user.dir") + "/src/main/java/org/rahulshettyacademy/resources/chromedriver.exe");
 
-        // Set Android options
-        UiAutomator2Options options = new UiAutomator2Options();
-        options.setDeviceName(prop.getProperty("AndroidDeviceNames"));
+		// Use relative path for APK
+		options.setApp(System.getProperty("user.dir") + "/src/test/java/appResources/Panasonic.apk");
 
-        // Use relative path for Chromedriver
-        options.setChromedriverExecutable(
-                System.getProperty("user.dir") + "/src/main/java/org/rahulshettyacademy/resources/chromedriver.exe");
+		// Initialise AndroidDriver (driver is inherited from AppiumUtils)
+		driver = new AndroidDriver(service.getUrl(), options);
+		DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        // Use relative path for APK
-        options.setApp(System.getProperty("user.dir")
-                + "/src/main/java/org/rahulshettyacademy/resources/General-Store.apk");
+		capabilities.setCapability("autoGrantPermissions", true);
 
-        // Initialize AndroidDriver
-        driver = new AndroidDriver(service.getUrl(), options);
+		// Global implicit wait
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	}
 
-        // Global implicit wait
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	@BeforeMethod(alwaysRun = true)
+	public void beforeEachTest() {
+		System.out.println("**** Reset App Before Every Test ****");
+		try {
+			// ✅ Correct method for Appium Java Client v8+
+			driver.terminateApp("com.plsindloyalty.anchor.samriddhi");
+			driver.activateApp("com.plsindloyalty.anchor.samriddhi");
+			System.out.println("App reset successfully.");
+		} catch (Exception e) {
+			System.out.println("App reset	 failed: " + e.getMessage());
+		}
+	}
 
-        // Initialize page objects
-    }
-
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-        if (service != null) {
-            service.stop();
-        }
-    }
+	@AfterTest(alwaysRun = true)
+	public void tearDown() {
+		if (driver != null) {
+			driver.quit();
+		}
+		if (service != null) {
+			service.stop();
+		}
+	}
 }
