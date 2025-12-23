@@ -28,49 +28,48 @@ public class EarnHistory extends AppiumUtils {
 	}
 
 	// Page Objects---------------------------------------
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement menuBtn;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement earnHistoryBtn;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement verifyearnHistoryPage;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement fromDate;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement calCancelBtn;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement calOkBtn;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement toDate;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement totalEarnedPoints;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private List<WebElement> scannedCoupontotal;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement searchcouponOption;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement sortBtn;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement verifySortBy;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement selectOption;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement SortOkBtn;
-	
 
 	// Methods--------------------------------------------
 

@@ -24,16 +24,23 @@ public class Notifications extends AppiumUtils {
 		this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 		PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10)), this);
 	}
-	
-	//PageObejcts----------------------------------
-	
-	@AndroidFindBy(xpath="")
+
+	// PageObejcts----------------------------------
+
+	@AndroidFindBy(xpath = "")
 	private WebElement notificationBtn;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement notoficationPageRedirection;
-	
-	
-	//Methods------------------------------------------------
+
+	// Methods------------------------------------------------
+
+	public void clickOnNotificationButton() {
+
+	}
+
+	public void verifyNotificationPageTitle() {
+
+	}
 
 }

@@ -70,4 +70,6 @@ public class OurProducts extends AppiumUtils {
 	private WebElement closeBtn;
 
 	// Methods---------------------------------------------------
+
+	
 }

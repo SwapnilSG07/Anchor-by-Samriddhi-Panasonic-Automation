@@ -38,6 +38,9 @@ public class RedemptionHistory extends AppiumUtils {
 
 	@AndroidFindBy(xpath = "")
 	private WebElement searchOrderId;
+	
+	@AndroidFindBy(xpath = "")
+	private WebElement clickorderId;
 
 	@AndroidFindBy(xpath = "")
 	private WebElement verifyRedirectedPage;
@@ -55,5 +58,6 @@ public class RedemptionHistory extends AppiumUtils {
 	private WebElement CheckProdStatus;
 
 	// Methods------------------------------
-
+	
+	
 }

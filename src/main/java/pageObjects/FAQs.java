@@ -41,22 +41,6 @@ public class FAQs extends AppiumUtils {
 	
 	//Methods--------------------------------------------------
 	
-	public void clickMenuButton() {
-		menuBtn.click();
-		
-	}
 	
-	public void clickFAQButton() {
-		
-		
-	}
-	public void verifyFaqText() {
-		
-	}
-	
-	public void verifyQuestions() {
-		
-		
-	}
 }
 

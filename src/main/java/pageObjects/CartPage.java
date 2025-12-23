@@ -59,43 +59,4 @@ public class CartPage extends AppiumUtils {
 
 	// Methods---------------------------------------------------------------------
 
-	public void ClickOncartButton() {
-
-	}
-
-	public void VerifyCartPageNavigation() {
-
-	}
-
-	public void ClickOnBackButton() {
-
-	}
-
-	public void VerifyRedirectionDashBoardPage() {
-
-	}
-
-	public void ClickOnAddressConfirmationButton() {
-
-	}
-
-	public void ClickOnSelectAddressRadioButton() {
-
-	}
-
-	public void ClickToRemoveSelectAddressWindow() {
-
-	}
-
-	public void VerifySeletedAddress() {
-
-	}
-
-	public void ClickOnAddItemToCartButton() {
-
-	}
-
-	public void VerifyRedirectionOnRewardPage() {
-
-	}
 }

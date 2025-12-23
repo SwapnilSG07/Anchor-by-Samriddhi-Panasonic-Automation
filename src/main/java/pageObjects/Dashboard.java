@@ -48,36 +48,26 @@ public class Dashboard extends AppiumUtils {
 	@AndroidFindBy(xpath = "")
 	private WebElement yearTilldate;
 
-	@AndroidFindBy(xpath="")
+	@AndroidFindBy(xpath = "")
 	private WebElement verifyYTDPointsPage;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement buPoints;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement buDetailsScreenPage;
 
-	
-	
-	//Clickon WD , WCT , SWG page objects
-	
-	@AndroidFindBy(xpath="")
+	// Clickon WD , WCT , SWG page objects
+
+	@AndroidFindBy(xpath = "")
 	private WebElement WD;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement SWG;
-	
-	@AndroidFindBy(xpath="")
+
+	@AndroidFindBy(xpath = "")
 	private WebElement WCT;
-	
-	
+
 	// Methods--------------------------------------------------------
 
-	public void ClickOnTotalPoints() {
-
-	}
-
-	public void VerifyTotalPointsPageRedirection() {
-
-	}
 }
